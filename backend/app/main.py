@@ -13,7 +13,8 @@ try:
     
     # Auto-seed database if no users exist
     from .database import SessionLocal
-    from . import models, auth
+    from . import models
+    from . import auth as auth_helper
     db = SessionLocal()
     try:
         existing_user = db.query(models.User).first()
@@ -25,7 +26,7 @@ try:
             for r in roles:
                 new_user = models.User(
                     username=r,
-                    hashed_password=auth.hash_password("password123"),
+                    hashed_password=auth_helper.hash_password("password123"),
                     name=f"Default {r.replace('_', ' ').title()}",
                     role=r,
                     is_active=True
