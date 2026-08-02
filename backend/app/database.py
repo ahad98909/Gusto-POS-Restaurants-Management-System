@@ -60,6 +60,8 @@ def create_database_if_not_exists(database_url: str):
         print(f"Warning: Failed to automatically verify/create MySQL database: {e}")
 
 
+from sqlalchemy.pool import NullPool
+
 # Ensure database exists before creating sqlalchemy engine
 create_database_if_not_exists(settings.DATABASE_URL)
 
@@ -71,7 +73,7 @@ if settings.DATABASE_URL.startswith("sqlite"):
 else:
     engine = create_engine(
         settings.DATABASE_URL,
-        pool_pre_ping=True  # useful for keeping MySQL/Postgres connections alive
+        poolclass=NullPool
     )
 
 
