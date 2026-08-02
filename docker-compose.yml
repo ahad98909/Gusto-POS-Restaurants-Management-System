@@ -28,6 +28,10 @@ services:
       - SECRET_KEY=supersecretkeygustopos1234567890!
     ports:
       - "8001:8000"
+    networks:
+      default:
+        aliases:
+          - backend.railway.internal
     depends_on:
       db:
         condition: service_healthy
